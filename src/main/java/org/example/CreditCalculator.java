@@ -10,15 +10,20 @@ public class CreditCalculator {
         this.monthlyPerCent = perCent / 12;
     }
 
+    private float calcAnnuity(float monthlyPercent) {
+        return (float) ((monthlyPercent * Math.pow(1 + monthlyPercent, creditMonthsNum)) /
+            (Math.pow(1 + monthlyPercent, creditMonthsNum) - 1));
+    }
+
     public float calcMonthlyPayment() {
-        return 0f;
+        return creditAmount * calcAnnuity(monthlyPerCent);
     }
 
     public float calcWholeRemainingSum() {
-        return 0f;
+        return creditAmount * (calcAnnuity(monthlyPerCent) * creditMonthsNum);
     }
 
     public float calcOverpayment() {
-        return 0f;
+        return calcWholeRemainingSum() - creditAmount;
     }
 }
